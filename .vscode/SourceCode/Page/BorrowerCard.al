@@ -1,24 +1,24 @@
-page 50516 "Borrower List"
+page 50517 "Borrower Card"
 {
-    PageType = List;
+    PageType = Card;
     ApplicationArea = All;
     UsageCategory = Administration;
-    CardPageId = "Borrower Card";
     SourceTable = Customer;
+
 
     layout
     {
         area(Content)
         {
-            repeater(Detail)
+            group(GroupName)
             {
 
                 field("No."; Rec."No.")
 
                 {
                     ApplicationArea = All;
-
                 }
+
                 field(Name; Rec.Name)
                 {
                     ApplicationArea = All;
@@ -43,20 +43,34 @@ page 50516 "Borrower List"
                 }
 
 
-
             }
         }
-
     }
 
-    trigger OnOpenPage()
-    begin
-        Rec.SETFILTER("Is Borrower", '=%1', true);
-    end;
+    actions
+    {
+        area(Processing)
+        {
+            action(ActionName)
+            {
+                ApplicationArea = All;
+
+                trigger OnAction()
+                begin
+
+                end;
+            }
+        }
+    }
+
+
 
     trigger OnNewRecord(BelowxRec: Boolean)
     begin
         IF Rec."Is Borrower" = false THEN
             Rec."Is Borrower" := true;
     end;
+
+    var
+        myInt: Integer;
 }
